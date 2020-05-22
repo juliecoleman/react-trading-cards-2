@@ -39,10 +39,32 @@ class TradingCard extends React.Component {
 }
 
 class TradingCardContainer extends React.Component {
+  constructor() {
+    super();
+
+    this.state = { cards: [] };  // Set initial value
+    this.updateCards = this.updateCards.bind(this);
+  }
+
+  updateCards(response) {
+    const cards = response.cards
+
+    this.setState({ cards: cards });
+  }
+
+  getAllCards() {
+    $.get('/api/cards', this.updateCards);
+  }
+
+  componentDidMount() {
+    this.getAllCards();
+  }
+
+
   render() {
     const tradingCards = [];
 
-    for (const currentCard of tradingCardData) {
+    for (const currentCard of this.state.cards) {
       tradingCards.push(
         <TradingCard
           key={currentCard.name}
@@ -54,10 +76,11 @@ class TradingCardContainer extends React.Component {
     }
 
     return (
-      <div id="container">{tradingCards}</div>
+      <div>{tradingCards}</div>
     );
   }
 }
+
 
 ReactDOM.render(
   <TradingCardContainer />,
