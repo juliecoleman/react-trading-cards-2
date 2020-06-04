@@ -1,23 +1,3 @@
-const tradingCardData = [
-  {
-    name: 'Balloonicorn',
-    skill: 'video games',
-    imgUrl: '/static/img/balloonicorn.jpg'
-  },
-
-  {
-    name: 'Float',
-    skill: 'baking pretzels',
-    imgUrl: '/static/img/float.jpg'
-  },
-
-  {
-    name: 'Llambda',
-    skill: 'knitting scarves',
-    imgUrl: '/static/img/llambda.jpg'
-  }
-];
-
 class TradingCard extends React.Component {
   render() {
     return (
@@ -53,7 +33,15 @@ class TradingCardContainer extends React.Component {
   }
 
   getAllCards() {
-    $.get('/api/cards', this.updateCards);
+    // $.get('/api/cards', this.updateCards);
+    fetch('/api/cards')
+    .then(response => response.json())
+    // .then(data => this.setState(data)); 
+    //this gets rid of need to do updateCards function above
+    // .then(data => this.updateCards(data));
+    //this also possible
+    .then(this.updateCards);
+    //this also possible
   }
 
   componentDidMount() {
